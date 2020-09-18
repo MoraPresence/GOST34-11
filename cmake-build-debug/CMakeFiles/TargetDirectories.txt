@@ -1,0 +1,3 @@
+C:/Users/od341/CLionProjects/GOST34-11/cmake-build-debug/CMakeFiles/GOST34_11.dir
+C:/Users/od341/CLionProjects/GOST34-11/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/od341/CLionProjects/GOST34-11/cmake-build-debug/CMakeFiles/rebuild_cache.dir
