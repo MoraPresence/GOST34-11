@@ -40,6 +40,16 @@ void L(unsigned char *a) {
     }
 }
 
+void P(unsigned char *a) {
+    int i = 0;
+    unsigned char tmp[64] = {};
+
+    for (i = 0; i < 64; i++) {
+        tmp[i] = a[Tau[i]];
+    }
+    memcpy(a,tmp,64);
+}
+
 int main() {
     printf("Hello, World!\n");
     return 0;
