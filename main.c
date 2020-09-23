@@ -172,13 +172,10 @@ void hash_XXX(unsigned char *IV, const unsigned char *message, unsigned long lon
     m[ 63 - len/8 ] |= (1 << (len & 0x7));
 
     g_N(N, hash, m);
+    v512[63] = len & 0xFF;
+    v512[62] = len >> 8;
     add512(N,v512,N);
     add512(Sigma,m,Sigma);
-    int i;
-    for (i = 0; i < 64; ++i) {
-        printf("%02x  ", N[i]);
-    }
-    //Problem here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     g_N(v0,hash,N);
     g_N(v0,hash,Sigma);
 
@@ -228,9 +225,9 @@ int main() {
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
             };
     hash_512(a, 504, b);
-//    int i;
-//    for (i = 0; i < 64; ++i) {
-//        printf("%02x  ", b[i]);
-//    }
+    int i;
+    for (i = 0; i < 64; ++i) {
+        printf("%02x  ", b[i]);
+    }
     return 0;
 }
