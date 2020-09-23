@@ -14,6 +14,47 @@
 #define HASH256         0
 #define HASH512         1
 
+union uint128 {
+    uint64_t qw[2];
+    uint8_t b[16];
+    uint32_t dw[4];
+    uint16_t w[8];
+} typedef uint128;
+
+union uint512 {
+    uint128 ow[4];
+    uint64_t qw[8];
+    uint16_t w[64];
+    uint32_t dw[16];
+    uint8_t b[64];
+} typedef uint512;
+
+//----------------------------------------------------------------------------------------------------------------
+void X(const void *a, const void *b, void *c);
+
+void S(unsigned char *a);
+
+void L(unsigned char *a);
+
+void P(unsigned char *a);
+
+void KeyTable(unsigned char *K, int i);
+//----------------------------------------------------------------------------------------------------------------
+
+void X(const void *a, const void *b, void *c) {
+    int i = 0;
+    const uint512 *A = a, *B = b;
+    uint512 *C = c;
+
+    C->qw[0] = A->qw[0] ^ B->qw[0];
+    C->qw[1] = A->qw[1] ^ B->qw[1];
+    C->qw[2] = A->qw[2] ^ B->qw[2];
+    C->qw[3] = A->qw[3] ^ B->qw[3];
+    C->qw[4] = A->qw[4] ^ B->qw[4];
+    C->qw[5] = A->qw[5] ^ B->qw[5];
+    C->qw[6] = A->qw[6] ^ B->qw[6];
+    C->qw[7] = A->qw[7] ^ B->qw[7];
+}
 
 void S(unsigned char *a) {
     int i = 0;
@@ -47,7 +88,14 @@ void P(unsigned char *a) {
     for (i = 0; i < 64; i++) {
         tmp[i] = a[Tau[i]];
     }
-    memcpy(a,tmp,64);
+    memcpy(a, tmp, 64);
+}
+
+void KeyTable(unsigned char *K, int i) {
+    X(K, C[i], K);
+    S(K);
+    P(K);
+    L(K);
 }
 
 int main() {
